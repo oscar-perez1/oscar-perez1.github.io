@@ -3,7 +3,7 @@
 	<head>
 		<title>CSE 455 Final Project</title>
         <link rel="stylesheet" type="text/css" href="/css/style.css">
-		<link rel="shortcut icon" href="xray.jpg" type="image/jpg">  
+		<link rel="shortcut icon" href="imgs/xray.jpg" type="image/jpg">  
 	</head>
 	<body>
 		<nav>
@@ -177,6 +177,24 @@
 							classified by a radiologist, From this dataset, we created a dataset for classification, as the original dataset is meant for abnormality
 							detection rather than classification. To get the data for classification, we used two steps: cropping the X-rays into the abnormality region
 							as defined by the radiologists, and splitting the newly cropped images into training, validation, and testing.<br><br>
+
+							To start, we get images like this: <br><br>
+
+							<img src="/imgs/im1.png" alt="Default X-ray" width="300" height="300"> <br><br>
+
+							This was found to have 5 potential abnormalities, diagnosed and located by multiple radiologists. Given the diagnoses, we produced the following
+							images with the corresponding labels: <br><br>
+							
+							<h3>Lung Opacity</h3>
+							<img src="/imgs/im1.png" alt="Default X-ray" width="300" height="300"> <br><br>
+							<h3>Nodule/Mass</h3>
+							<img src="/imgs/im1.png" alt="Default X-ray" width="300" height="300"> <br><br>
+							<h3>Infiltration</h3>
+							<img src="/imgs/im1.png" alt="Default X-ray" width="300" height="300"> <br><br>
+							<h3>Lung Opacity</h3>
+							<img src="/imgs/im1.png" alt="Default X-ray" width="300" height="300"> <br><br>
+							<h3>Consolidation</h3>
+							<img src="/imgs/im1.png" alt="Default X-ray" width="300" height="300"> <br><br>
 
 							<a href="https://drive.google.com/drive/folders/1QaExut1A8IspwQLGP0fpDmzJq4IQPsnj?usp=sharing">The data we utilized for this project can be also
 								accessed here (accessed during work via Google Colab).</a>
