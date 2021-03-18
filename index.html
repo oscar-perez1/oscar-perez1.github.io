@@ -16,7 +16,7 @@
 		</nav>
 		<div class="container">
     		<div class="blurb">
-        		<h1>X-ray Abnormalities Detection</h1>
+        		<h1>X-ray Abnormalities Classification</h1>
                     
                 </p>
                     <h2>Problem Description</h2>
@@ -209,12 +209,28 @@
 
                     <h2>Discussion</h2>
                         <h3>Problems Encountered</h3>
-						<p></p>
+						<p>
+							The first major problem when we tackled this project was getting a sufficient dataset to tackle the problem we wanted to face. This involved
+							processing the data we got from the Kaggle to create a new dataset of chest abnormalities. Processing and reading the dicom images was an
+							issue to overcome but we found some useful libraries online to help with reading them, such as pydicom. Another problem was the runtime of
+							large pretrained was too high to tune hyperparameters. This happened specifically for ResNet-152 so we found the hyperparameters that worked
+							best with ResNet-50 to train ResNet-152. We also had to ensure that the dataset and images we were working with were formatted as inputs that
+							the pre-trained networks could handle, as some of them required resizing and restructuing of the data passed in during training.					
+						</p>
 
                         <h3>Next Steps</h3>
-						<p></p>
+						<p>
+							Since the dataset we based our project on was meant for abnormality detection rather than classification, the next steps we would take would
+							be to expand on our classifiers and use them for abnormality detection.
+						</p>
+
                         <h3>Approach Uniqueness</h3>
-						<p></p>
+						<p>
+							We decided to try multiple approaches to classification, both building a model from our own design and by doing transfer learning. In most
+							cases, teams would likely use transfer learning, as there are a number of highly performant models. We found it beneficial to do both,
+							learning from our own designs of a CNN for specifically X-rays, while also seeing how well image classifiers trained for more conventional
+							images, worked on X-rays.
+						</p>
     		</div><!-- /.blurb -->
 		</div><!-- /.container -->
 		<footer>
