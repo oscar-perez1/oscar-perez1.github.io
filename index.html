@@ -17,18 +17,30 @@
 		<div class="container">
     		<div class="blurb">
         		<h1>X-ray Abnormalities Classification</h1>
-                    
-                </p>
                     <h2>Problem Description</h2>
 					<p>
-						Radiologists are hugely important to diagnosing conditions from medical images,
-						such as MRIs, CT scans, and X-ray scans. In our project, we aim to provide an
-						extra perspective to X-ray scans using computer vision. We do this by providing
-						a best guess for the classification for a given area of a chest x-ray. Our inspiration
-						for this project came from this Kaggle competition: <a href="https://www.kaggle.com/c/vinbigdata-chest-xray-abnormalities-detection">VinBigData Chest X-ray Abnormalities
-						Detection | Kaggle</a>, but we wanted to focus on the classification of the certain abnormality regions.
-						This gives us more time to consider the models currently used in object classification, trying transfer
-						learning as well as building our own classification models.
+						Medical images such as MRIs, CT scans, and X-ray scans are immensely useful to Radiologists for
+						diagnosing various conditions. Our project aims to provide an extra perspective on X-ray scans
+						using computer vision and neural networks. We accomplish this by supplying a best guess for the
+						classification for a given region of a chest x-ray. Our data comes from this Kaggle competition:
+						<a href="https://www.kaggle.com/c/vinbigdata-chest-xray-abnormalities-detection">VinBigData Chest X-ray Abnormalities Detection | Kaggle</a>.
+						In this competition, the task was to find abnormality regions as well as identify them. In our project,
+						we chose to focus on the classification portion so that we could explore various model architectures as
+						well as various training methods such as transfer learning and building models from scratch. The potential classification labels include Aortic enlargement,
+						Atelectasis, Calcification, Cardiomegaly, Consolidation, ILD, Inflitration, Lung Opacity, Nodule/Mass, Other lesion,
+						Pleural effusion, Pleural thickening, Pneumothorax, Pulmonary fibrosis.
+					</p>
+
+					<h2>Preprocessing the data for classification</h2>
+					<p>
+						As mentioned in the Dataset tab, our initial dataset contains full dicom X-ray chest images. The training set is
+						labeled by multiple radiologists, specifying regions of each X-ray in which abnormalities appear. To create our
+						dataset for classification, we cropped the regions of abnormalities and resized them to be 64x64. We then split the
+						dataset into training, validation, and test sets in a 81:9:10 split. We originally had a 9:1 split for training and
+						test but we realized that we needed data in order to tune hyperparameters. Thus, we split the training data 9:1 in
+						order to create a validation set. The code to parse the data as well as splitting the data can be found in the code
+						folder of the github repository. The code to parse the dicom data is in ConvDataPrep.ipynb and the code to split the 
+						training data into multiple sets is in SplitTrainTest.ipynb.
 					</p>
 
                     <h2>Previous Work</h2>
@@ -43,7 +55,7 @@
 						the final fully connected layer to have an output size of 14. After experimenting with hyperparameters, the
 						following parameters resulted in the highest test accuracy of 71% with epochs=5, lr=0.001, decay=0.0005, batch_size=128.
 
-						<h3>Pre-trained network (ResNet50)</h3>
+						<h3>Pre-trained network (ResNet50 & ResNet152)</h3>
 						We used transfer learning on the pretrained model and changed the final layer to a fully connected linear
 						layer with an output of 14 (per our classification problem). Data augmentations applied to this model
 						included random flippings as well as random cropping. After playing with the hyperparameters and 
@@ -68,18 +80,6 @@
 					</p>
 
                     <h2>Approach</h2>
-						<h3>Preprocessing the data for classification</h3>
-						<p>
-							As mentioned in the Dataset tab, our initial dataset contains full dicom X-ray images
-							chests. The training set is labeled by radiologists, specifying regions of each X-ray
-							in which abnormalities appear. To create our dataset for classification, we recreate
-							the training set by going through each image and creating a new image of the cropped
-							abnormalities, making sure to resize the image to be 64x64 for the input of our models.
-							After this, we split this training set into labeled training, validation, and test sets.
-							The code to parse the dicom data is in ConvDataPrep.ipynb and the code to split the
-							training data into multiple sets is in SplitTrainTest.ipynb.
-						</p>
-
 						<h3>Building our own network for classification</h3>
 						<p>
 							We approached building our own network by using the demo from Professor Redmon’s lecture
@@ -96,7 +96,8 @@
 							Additionally, we worked on building our own convolutional neural network, increasing the number of
 							layers and taking inspiration from how VGG-19 is developed. We noticed from the demonstrational CNN’s,
 							each convolutional layer has a stride of two, whereas VGG-19 only increases the stride every few layers.
-							We then created a number of different CNNs with more layers, creating a deeper neural network.
+							We then created a number of different CNNs with more layers, creating a deeper neural network. Information
+							on the models that we tested are below.
 						</p>
 
 					<h3>Models we implemented</h3>
@@ -162,12 +163,12 @@
 
 					<h3>Random search for hyperparameters</h3>
 					<p>
-						Instead of using a grid search algorithm to tune hyper parameters, we picked random values for each
-						hyper parameter at each iteration. We wanted to tune batch size, starting learning rate, momentum,
-						and decay. Using grid search to iterate through all possible combinations would have been prohibitively
-						time consuming since the search space increases dramatically with each additional variable. Thus, we
-						opted to use a random search algorithm instead. We also found a <a href="https://www.jmlr.org/papers/v13/bergstra12a.html">
-						study that showed that a random search algorithm was more efficient than grid search</a>.
+						We wanted to tune batch size, starting learning rate, momentum, and decay. Using grid search on four
+						dimensions would have either been prohibitively time consuming or not enough of the search space would
+						be tested. Instead, we opted to use a random search algorithm where we randomly picked values within
+						predefined ranges for our hyper parameters. Additionally, after some more research into which method
+						we should use, we also found a <a href="https://www.jmlr.org/papers/v13/bergstra12a.html">study that
+						showed that a random search algorithm was more efficient than grid search</a>. 
 					</p>
 
                     <h2>Datasets</h2>
