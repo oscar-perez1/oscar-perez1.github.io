@@ -19,14 +19,16 @@
                     
                 </p>
                     <h2>Problem Description</h2>
-					<p>Radiologists are hugely important to diagnosing conditions from medical images, <br>
+					<p>
+						Radiologists are hugely important to diagnosing conditions from medical images, <br>
 						such as MRIs, CT scans, and X-ray scans. In our project, we aim to provide an <br>
 						extra perspective to X-ray scans using computer vision. We do this by providing <br>
 						a best guess for the classification for a given area of a chest x-ray. Our inspiration <br>
 						for this project came from this Kaggle competition: <a href="https://www.kaggle.com/c/vinbigdata-chest-xray-abnormalities-detection">VinBigData Chest X-ray Abnormalities <br>
 						Detection | Kaggle</a>, but we wanted to focus on the classification of the certain abnormality regions. <br>
 						This gives us more time to consider the models currently used in object classification, trying transfer <br>
-						learning as well as building our own classification models.</p>
+						learning as well as building our own classification models.
+					</p>
 
                     <h2>Previous Work</h2>
 					<p></p>
@@ -35,12 +37,46 @@
 					<p></p>
 
                     <h2>Datasets</h2>
-					<p>We found our dataset from this kaggle competition: <a href="https://www.kaggle.com/c/vinbigdata-chest-xray-abnormalities-detection">VinBigData Chest X-ray Abnormalities Detection | Kaggle.</a> <br>
-						This dataset provided 15000 training samples, in the form of dicom images. Each image was classified by a <br>
-						radiologist, From this dataset, we created a dataset for classification, as the original dataset is meant <br>
-						for abnormality detection rather than classification. To get the data for classification, we used two steps: <br>
-						cropping the X-rays into the abnormality region as defined by the radiologists, and splitting the newly <br>
-						cropped images into training, validation, and testing.</p>
+						<h3>Preprocessing the data for classification</h3>
+						<p>
+							As mentioned in the Dataset tab, our initial dataset contains full dicom X-ray images
+							chests. The training set is labeled by radiologists, specifying regions of each X-ray
+							in which abnormalities appear. To create our dataset for classification, we recreate
+							the training set by going through each image and creating a new image of the cropped
+							abnormalities, making sure to resize the image to be 64x64 for the input of our models.
+							After this, we split this training set into labeled training, validation, and test sets.
+							The code to parse the dicom data is in ConvDataPrep.ipynb and the code to split the
+							training data into multiple sets is in SplitTrainTest.ipynb.
+						</p>
+
+						<h3>Building our own network for classification</h3>
+						<p>
+							We approached building our own network by using the demo from Professor Redmon’s lecture
+							on Convolutional Neural Networks. We started by reshaping each of the models to fit our
+							data, as the cropped images of abnormalities we used were of size 64x64 whereas the Cifar-10
+							images were of size 32x32. Additionally, we needed to change the output layer to be of size
+							14, as we have 14 labels as opposed to the 10 labels of Cifar-10. We made some new modifications
+							to the convolutional models, modifying the number of input channels for the first layer to 1, as
+							the X-rays are black and white, and changing the final layer to have the appropriate amount of
+							inputs and outputs, as the number of features is increased from the first layer being of dimension
+							64x64 and we are classifying 14 abnormalities. We did this for all of the demo neural networks, as
+							well as implementing random augmentation on the training set, and trained with annealing.
+							<br>
+							Additionally, we worked on building our own convolutional neural network, increasing the number of
+							layers and taking inspiration from how VGG-19 is developed. We noticed from the demonstrational CNN’s,
+							each convolutional layer has a stride of two, whereas VGG-19 only increases the stride every few layers.
+							We then created a number of different CNNs with more layers, creating a deeper neural network.
+						</p>
+
+						<h3>Random search for hyperparameters</h3>
+						<p>
+							Instead of using a grid search algorithm to tune hyper parameters, we picked random values for each
+							hyper parameter at each iteration. We wanted to tune batch size, starting learning rate, momentum,
+							and decay. Using grid search to iterate through all possible combinations would have been prohibitively
+							time consuming since the search space increases dramatically with each additional variable. Thus, we
+							opted to use a random search algorithm instead. We also found a <a href="https://www.jmlr.org/papers/v13/bergstra12a.html">study that showed that a random search
+							algorithm was more efficient than grid search</a>.
+						</p>
 
                     <h2>Results</h2>
 					<p></p>
