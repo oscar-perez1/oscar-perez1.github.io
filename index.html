@@ -31,7 +31,40 @@
 					</p>
 
                     <h2>Previous Work</h2>
-					<p></p>
+					<p>
+						We used a number of different inspirations for our approach to abnormality classification.<br><br>
+
+						<h3>Pre-trained network (Inceptionv3)</h3>
+						We experimented with utilizing some of the provided models that were pre-trained on the ImageNet dataset
+						for our specific classification problem. One of the models utilized included Inceptionv3 loaded from the
+						torchvision models subpackage. Adapting this to our problems involved rearranging the input images to be
+						of proper dimensions, as the Inceptionv3 model required images to be of at least size 300x300, and modifying
+						the final fully connected layer to have an output size of 14. After experimenting with hyperparameters, the
+						following parameters resulted in the highest test accuracy of 71% with epochs=5, lr=0.001, decay=0.0005, batch_size=128.
+
+						<h3>Pre-trained network (ResNet50)</h3>
+						We used transfer learning on the pretrained model and changed the final layer to a fully connected linear
+						layer with an output of 14 (per our classification problem). Data augmentations applied to this model
+						included random flippings as well as random cropping. After playing with the hyperparameters and 
+						applying data augmentation and simulated annealing, the following parameters resulted in the highest test
+						accuracy of 75% with epochs=2, lr=0.001, decay=0.0005, batch_size=32.<br><br>
+
+						Further tuning of the model seemed to overfit heavily resulting in a lower testing accuracy, and further training
+						using a deeper network like resnet 152 did increase in a 1% increase in testing accuracy and 1% decrease in
+						training accuracy. However, each epoch with the ResNet152 took about ~5 minutes which was much slower than
+						ResNet50.
+
+						<h3>Pre-trained network (AlexNet)</h3>
+						We tried to use AlexNet which is not as deep as resnet with 8 layers (5 convolutional followed by max pooling layers).
+						It was much faster to train with just 30s/ epoch. However, we found that we have to start with a much lower learning
+						rate for this i.e. 0.0000001 otherwise the loss would go to NaN. We were able to achieve a test and train accuracy of
+						~0.64 before the model started overfitting and the test accuracy went down. 
+						
+						<h3>Pre-trained networkk (VGG16)</h3>
+						Using this model which is 16 layer deep we found it to be slightly better than AlexNet. This was expected since it does
+						perform better on the ImageNet dataset compared to AlexNet). The train time was slightly slower with 150s/epoch but we
+						were able to achieve a train and test accuracy of ~68%.
+					</p>
 
                     <h2>Approach</h2>
 						<h3>Preprocessing the data for classification</h3>
@@ -65,7 +98,7 @@
 							We then created a number of different CNNs with more layers, creating a deeper neural network.
 						</p>
 
-					<h3>Models we created</h3>
+					<h3>Models we implemented</h3>
 					<ul>
 						<li>CustomNet5</li>
 							<ul>
