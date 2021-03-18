@@ -58,12 +58,73 @@
 							inputs and outputs, as the number of features is increased from the first layer being of dimension
 							64x64 and we are classifying 14 abnormalities. We did this for all of the demo neural networks, as
 							well as implementing random augmentation on the training set, and trained with annealing.
-							<br>
+							<br><br>
 							Additionally, we worked on building our own convolutional neural network, increasing the number of
 							layers and taking inspiration from how VGG-19 is developed. We noticed from the demonstrational CNN’s,
 							each convolutional layer has a stride of two, whereas VGG-19 only increases the stride every few layers.
 							We then created a number of different CNNs with more layers, creating a deeper neural network.
 						</p>
+
+					<h3>Models we created</h3>
+					<ul>
+						<li>CustomNet5</li>
+							<ul>
+								<li>5 Convolutional Layers with batch normalization and a linear layer</li>
+								<li>Structure:</li>
+									<ul>
+										<li>Conv2d(1, 16, 5, stride=2, padding=1)</li>
+										<li>BatchNorm2d(16)</li>
+										<li>Conv2d(16, 32, 3, stride=2, padding=1)</li>
+										<li>BatchNorm2d(32)</li>
+										<li>Conv2d(32, 64, 3, stride=2, padding=1)</li>
+										<li>BatchNorm2d(64)</li>
+										<li>Conv2d(64, 128, 3, stride=2, padding=1)</li>
+										<li>BatchNorm2d(128)</li>
+										<li>Linear(8192, 14)</li>
+									</ul>
+							</ul>
+						<li>CustomNet8</li>
+							<ul>
+								<li>7 Convolutional Layers with batch normalization and a linear layer</li>
+								<li>Structure:</li>
+									<ul>
+										<li>Conv2d(1, 16, 5, stride=2, padding=1)</li>
+										<li>Conv2d(16, 16, 5, stride=1, padding=1)</li>
+										<li>BatchNorm2d(16)</li>
+										<li>Conv2d(16, 32, 3, stride=2, padding=1)</li>
+										<li>Conv2d(32, 32, 3, stride=1, padding=1)</li>
+										<li>BatchNorm2d(32)</li>
+										<li>Conv2d(32, 64, 3, stride=2, padding=1)</li>
+										<li>Conv2d(64, 64, 3, stride=1, padding=1)</li>
+										<li>BatchNorm2d(64)</li>
+										<li>Conv2d(64, 128, 3, stride=2, padding=1)</li>
+										<li>BatchNorm2d(128)</li>
+										<li>Linear(8192, 14)</li>
+									</ul>
+							</ul>
+						<li>CustomNet10</li>
+							<ul>
+								<li>7 Convolutional Layers with batch normalization and 3 linear layers</li>
+								<li>Structure:</li>
+									<ul>
+										<li>Conv2d(1, 16, 5, stride=2, padding=1)</li>
+										<li>Conv2d(16, 16, 5, stride=1, padding=1)</li>
+										<li>BatchNorm2d(16)</li>
+										<li>Conv2d(16, 32, 3, stride=2, padding=1)</li>
+										<li>Conv2d(16, 32, 3, stride=2, padding=1)</li>
+										<li>BatchNorm2d(32)</li>
+										<li>Conv2d(32, 64, 3, stride=2, padding=1)</li>
+										<li>Conv2d(32, 64, 3, stride=2, padding=1)</li>
+										<li>BatchNorm2d(64)</li>
+										<li>Conv2d(64, 64, 3, stride=1, padding=1)</li>
+										<li>Conv2d(64, 128, 3, stride=2, padding=1)</li>
+										<li>BatchNorm2d(128)</li>
+										<li>Linear(8192, 8192)</li>
+										<li>Linear(8192, 8192)</li>
+										<li>Linear(8192, 14)</li>
+									</ul>
+							</ul>
+					</ul>
 
 					<h3>Random search for hyperparameters</h3>
 					<p>
